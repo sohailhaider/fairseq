@@ -74,7 +74,7 @@ def main():
         ]
 
     logging.info('Starting up Flask')
-    app.run('0.0.0.0', 8080)
+    app.run('0.0.0.0', 5000)
 
     logging.info('Type the input sentence and press return:')
     for line in fileinput.input(args.files):
