@@ -76,7 +76,7 @@ def main():
     def pharaphrase():
         jsonData = request.get_json(force=True);
         if jsonData and jsonData['sentence']:
-            return jsonify({ 'input': jsonData['sentence'], 'output': jsonify( jsonData['sentence'] ) })
+            return jsonify({ 'input': jsonData['sentence'], 'output': gen_paraphrases( jsonData['sentence'] )  })
         else:
             return jsonify({'error':'\'sentence\' is required'})
 
