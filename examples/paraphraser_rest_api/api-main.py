@@ -6,6 +6,7 @@ import logging
 import os
 import sys
 import flask
+from flask import request, jsonify
 
 
 from fairseq.models.transformer import TransformerModel
@@ -16,11 +17,6 @@ logging.getLogger().setLevel(logging.INFO)
 
 def main():
     
-    app = flask.Flask(__name__)
-    app.config["DEBUG"] = True
-    @app.route('/', methods=['POST'])
-    def pharaphrase():
-        return 'will paraphrase'
     
     
     parser = argparse.ArgumentParser(description='')
@@ -32,8 +28,6 @@ def main():
                         help='path to fairseq examples/translation_moe/src directory')
     parser.add_argument('--num-experts', type=int, default=10,
                         help='(keep at 10 unless using a different model)')
-    parser.add_argument('files', nargs='*', default=['-'],
-                        help='input files to paraphrase; "-" for stdin')
     args = parser.parse_args()
 
     if args.user_dir is None:
@@ -73,16 +67,26 @@ def main():
             for i in range(args.num_experts)
         ]
 
-    logging.info('Starting up Flask')
-    app.run('0.0.0.0', 5000)
 
-    logging.info('Type the input sentence and press return:')
-    for line in fileinput.input(args.files):
-        line = line.strip()
-        if len(line) == 0:
-            continue
-        for paraphrase in gen_paraphrases(line):
-            print(paraphrase)
+
+    app = flask.Flask(__name__)
+    app.config["DEBUG"] = True
+    @app.route('/', methods=['POST'])
+    
+    def pharaphrase():
+        jsonData = request.get_json(force=True);
+        if jsonData and jsonData['sentence']:
+            return jsonify({ 'input': jsonData['sentence'], 'output': jsonify( jsonData['sentence'] ) })
+        else:
+            return jsonify({'error':'\'sentence\' is required'})
+
+    # logging.info('Type the input sentence and press return:')
+    # for line in fileinput.input(args.files):
+    #     line = line.strip()
+    #     if len(line) == 0:
+    #         continue
+    #     for paraphrase in gen_paraphrases(line):
+    #         print(paraphrase)
 
 
 if __name__ == '__main__':
