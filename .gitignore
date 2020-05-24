@@ -130,3 +130,8 @@ data-bin/
 
 # Experimental Folder
 experimental/*
+
+# Ignoring the paraphraser models
+paraphraser.en-fr
+paraphraser.fr-en.hMoEup
+
