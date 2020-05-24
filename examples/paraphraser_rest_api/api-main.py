@@ -71,8 +71,8 @@ def main():
 
     app = flask.Flask(__name__)
     app.config["DEBUG"] = True
-    @app.route('/', methods=['POST'])
     
+    @app.route('/', methods=['POST'])
     def pharaphrase():
         jsonData = request.get_json(force=True);
         if jsonData and jsonData['sentence']:
@@ -80,6 +80,8 @@ def main():
         else:
             return jsonify({'error':'\'sentence\' is required'})
 
+    app.run('0.0.0.0', 6000)
+    
     # logging.info('Type the input sentence and press return:')
     # for line in fileinput.input(args.files):
     #     line = line.strip()
