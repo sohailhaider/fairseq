@@ -70,7 +70,7 @@ def main():
             for i in range(len(fr))
         ]
         
-        return enNew
+        return ".".join(enNew)
 
 
 
