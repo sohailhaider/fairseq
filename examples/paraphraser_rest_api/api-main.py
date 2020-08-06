@@ -66,7 +66,7 @@ def main():
             for i in range(len(en))
         ]
         enNew = [
-            fr2en.translate(fr[i], inference_step_args={'expert': 1})
+            fr2en.translate(fr[i], inference_step_args={'expert': 3})
             for i in range(len(fr))
         ]
         
