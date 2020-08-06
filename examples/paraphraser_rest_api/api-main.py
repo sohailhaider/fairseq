@@ -61,11 +61,16 @@ def main():
     ).eval()
 
     def gen_paraphrases(en):
-        fr = en2fr.translate(en)
-        return [
-            fr2en.translate(fr, inference_step_args={'expert': i})
-            for i in range(args.num_experts)
+        fr = [
+            en2fr.translate(en[i])
+            for i in range(en)
         ]
+        enNew = [
+            fr2en.translate(fr[i], inference_step_args={'expert': 1})
+            for i in range(fr)
+        ]
+        
+        return enNew
 
 
 
@@ -81,6 +86,10 @@ def main():
             return jsonify({'error':'\'sentence\' is required'})
 
     app.run('0.0.0.0', 6000)
+    
+    
+    # words = txt.split(".")
+    # print ([".".join(words[i:i+span]) for i in range(0, len(words), span)])
     
     # logging.info('Type the input sentence and press return:')
     # for line in fileinput.input(args.files):
