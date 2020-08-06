@@ -81,7 +81,7 @@ def main():
     def pharaphrase():
         jsonData = request.get_json(force=True);
         if jsonData and jsonData['sentence']:
-            span = 3
+            span = int(jsonData['span'])
             words = jsonData['sentence'].split(".")
             wordsArray = [".".join(words[i:i+span]) for i in range(0, len(words), span)]
             return jsonify({ 'input': jsonData['sentence'], 'output': gen_paraphrases( wordsArray )  })
