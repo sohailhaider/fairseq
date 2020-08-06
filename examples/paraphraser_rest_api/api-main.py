@@ -63,11 +63,11 @@ def main():
     def gen_paraphrases(en):
         fr = [
             en2fr.translate(en[i])
-            for i in range(en)
+            for i in range(len(en))
         ]
         enNew = [
             fr2en.translate(fr[i], inference_step_args={'expert': 1})
-            for i in range(fr)
+            for i in range(len(fr))
         ]
         
         return enNew
@@ -81,6 +81,7 @@ def main():
     def pharaphrase():
         jsonData = request.get_json(force=True);
         if jsonData and jsonData['sentence']:
+            span = 3
             words = jsonData['sentence'].split(".")
             wordsArray = [".".join(words[i:i+span]) for i in range(0, len(words), span)]
             return jsonify({ 'input': jsonData['sentence'], 'output': gen_paraphrases( wordsArray )  })
