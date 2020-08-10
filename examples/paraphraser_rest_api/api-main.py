@@ -7,6 +7,7 @@ import os
 import sys
 import flask
 from flask import request, jsonify
+from flask_cors import CORS, cross_origin
 
 
 from fairseq.models.transformer import TransformerModel
@@ -75,9 +76,12 @@ def main():
 
 
     app = flask.Flask(__name__)
+    cors = CORS(app)
+    app.config['CORS_HEADERS'] = 'Content-Type'
     app.config["DEBUG"] = True
     
     @app.route('/', methods=['POST'])
+    @cross_origin()
     def pharaphrase():
         jsonData = request.get_json(force=True);
         if jsonData and jsonData['sentence']:
