@@ -88,7 +88,7 @@ def main():
         else:
             return jsonify({'error':'\'sentence\' is required'})
 
-    app.run('0.0.0.0', 6000)
+    app.run('0.0.0.0', 8181)
     
     
     # words = txt.split(".")
